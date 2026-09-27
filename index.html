@@ -3,15 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SPABLE — Special Ability Connect · Enabling Possibilities. Empowering Lives.</title>
-  <meta name="description" content="SPABLE — Special Ability Connect. A global social network, marketplace and aggregator for the disability community.">
+  <title>SPABLE — Special Ability Connect</title>
+  <meta name="description" content="SPABLE — Special Ability Connect. A global social network, marketplace and aggregator for the specially able community.">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    * { scroll-behavior: smooth; }
+    * { scroll-behavior: smooth; box-sizing: border-box; }
     body {
       background-color: #f7fafc;
-      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
       -webkit-font-smoothing: antialiased;
+      margin: 0;
     }
     :focus-visible {
       outline: 3px solid #0d9488;
@@ -21,70 +22,53 @@
     .card-hover { transition: all 0.2s ease; }
     .card-hover:hover {
       transform: translateY(-2px);
-      box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.04), 0 8px 10px -6px rgb(0 0 0 / 0.02);
+      box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.04);
     }
-    .language-select {
-      appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%234b5563' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
-      background-position: right 0.75rem center;
-      background-repeat: no-repeat;
-      background-size: 1.25rem;
-      padding-right: 2.5rem;
-    }
-    .aggregator-item { transition: background 0.15s ease; }
-    .aggregator-item:hover { background-color: #f0fdfa; }
-    .market-badge {
-      background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%);
-      border: 1px solid #99f6e4;
-    }
-    .scroll-x-clean {
-      scrollbar-width: thin;
-      scrollbar-color: #cbd5e1 #f1f5f9;
-      -webkit-overflow-scrolling: touch;
-    }
-    .scroll-x-clean::-webkit-scrollbar { height: 6px; }
-    .scroll-x-clean::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 6px; }
     .sr-only {
-      position: absolute;
-      width: 1px; height: 1px;
-      padding: 0; margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border-width: 0;
-    }
-    .notice-bg {
-      background: linear-gradient(90deg, #ecfdf5 0%, #f0fdfa 100%);
-      border-left: 6px solid #0d9488;
-    }
-    .empty-state {
-      background: repeating-linear-gradient(45deg, #f9fafb, #f9fafb 10px, #ffffff 10px, #ffffff 20px);
-    }
-    .sticky-sidebar {
-      position: sticky;
-      top: 88px;
-    }
-    @keyframes shimmer {
-      0% { background-position: -400px 0; }
-      100% { background-position: 400px 0; }
-    }
-    .shimmer {
-      background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 37%, #f1f5f9 63%);
-      background-size: 400px 100%;
-      animation: shimmer 1.4s ease infinite;
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0;
     }
     .spable-logo {
       background: linear-gradient(135deg, #0d9488 0%, #14b8a6 50%, #2dd4bf 100%);
+    }
+
+    /* ============================================
+       MODAL — CRITICAL: uses inline styles + IDs
+       so Tailwind class conflicts can't break it
+       ============================================ */
+    #loginModal {
+      display: none;           /* default: hidden */
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 99999;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    #loginModal.is-open {
+      display: flex !important;  /* overrides everything */
+    }
+    .modal-box {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      max-width: 400px;
+      width: 100%;
+      padding: 24px;
+      position: relative;
     }
   </style>
 </head>
 <body class="text-gray-700 antialiased">
 
-  <header class="w-full bg-white/95 backdrop-blur-sm shadow-sm sticky top-0 z-40 border-b border-gray-100">
+  <!-- ============ HEADER ============ -->
+  <header class="w-full bg-white shadow-sm sticky top-0 z-40 border-b border-gray-100">
     <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
       <div class="flex flex-wrap items-center justify-between py-2.5 gap-2">
-        <a href="#" class="flex items-center space-x-2.5 group" aria-label="SPABLE home">
-          <div class="w-10 h-10 rounded-xl spable-logo flex items-center justify-center text-white font-extrabold text-lg shadow-sm">
+        <a href="#" class="flex items-center space-x-2.5" aria-label="SPABLE home">
+          <div class="w-10 h-10 rounded-xl spable-logo flex items-center justify-center text-white font-extrabold text-lg">
             <span aria-hidden="true">S</span>
           </div>
           <div class="leading-tight">
@@ -101,13 +85,9 @@
         </nav>
 
         <div class="flex items-center gap-2">
-          <div class="hidden md:flex items-center bg-gray-50 rounded-xl border border-gray-200 px-3 py-1.5">
-            <input type="search" id="globalSearch" placeholder="Search…" class="bg-transparent text-sm outline-none w-40" aria-label="Search">
-          </div>
-
           <div class="relative inline-block">
             <label for="languageSelect" class="sr-only">Select language</label>
-            <select id="languageSelect" class="language-select bg-gray-50 border border-gray-200 text-gray-700 text-xs rounded-xl py-2 pl-3 pr-8 cursor-pointer">
+            <select id="languageSelect" class="bg-gray-50 border border-gray-200 text-gray-700 text-xs rounded-xl py-2 px-3 cursor-pointer">
               <option value="en" selected>🇬🇧 EN</option>
               <option value="es">🇪🇸 ES</option>
               <option value="fr">🇫🇷 FR</option>
@@ -118,25 +98,15 @@
             </select>
           </div>
 
-          <button class="relative p-2 rounded-xl bg-gray-50 border border-gray-200 hover:bg-gray-100" aria-label="Notifications" id="notifBtn">
-            <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
-          </button>
-
-          <button class="login-trigger hidden sm:inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium rounded-xl bg-teal-600 text-white hover:bg-teal-700" data-provider="any">
+          <button id="loginBtnTop" class="login-trigger hidden sm:inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium rounded-xl bg-teal-600 text-white hover:bg-teal-700">
             Log in
           </button>
         </div>
       </div>
-
-      <div class="lg:hidden flex overflow-x-auto scroll-x-clean gap-1.5 pb-2 -mx-1 px-1">
-        <a href="#feed" class="flex-shrink-0 px-3 py-1.5 text-xs font-medium rounded-lg bg-teal-50 text-teal-700">Feed</a>
-        <a href="#market" class="flex-shrink-0 px-3 py-1.5 text-xs font-medium rounded-lg bg-gray-50 text-gray-600">Market</a>
-        <a href="#aggregator" class="flex-shrink-0 px-3 py-1.5 text-xs font-medium rounded-lg bg-gray-50 text-gray-600">Aggregator</a>
-        <a href="#resources" class="flex-shrink-0 px-3 py-1.5 text-xs font-medium rounded-lg bg-gray-50 text-gray-600">Resources</a>
-      </div>
     </div>
   </header>
 
+  <!-- ============ MAIN ============ -->
   <main class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-5 md:py-7">
 
     <!-- HERO -->
@@ -145,7 +115,7 @@
         <div class="grid grid-cols-1 md:grid-cols-5">
           <div class="md:col-span-2 bg-gradient-to-br from-teal-50 via-cyan-50 to-teal-100 p-6 md:p-8 flex flex-col justify-center">
             <div class="flex items-center gap-3 mb-3">
-              <div class="w-12 h-12 rounded-xl spable-logo flex items-center justify-center text-white font-extrabold text-2xl shadow-sm">
+              <div class="w-12 h-12 rounded-xl spable-logo flex items-center justify-center text-white font-extrabold text-2xl">
                 <span aria-hidden="true">S</span>
               </div>
               <div>
@@ -155,7 +125,7 @@
             </div>
             <div class="h-1 w-16 bg-teal-500 rounded-full mt-1 mb-3"></div>
             <p class="text-sm text-teal-800 font-medium leading-relaxed">
-              A global social network, marketplace and aggregator built with and for the disability community.
+              A global social network, marketplace and aggregator built with and for the specially able community.
             </p>
           </div>
 
@@ -181,7 +151,8 @@
     </section>
 
     <!-- NOTICE -->
-    <div class="notice-bg rounded-2xl shadow-sm p-3.5 md:p-4 mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border border-teal-100">
+    <div class="rounded-2xl shadow-sm p-3.5 md:p-4 mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border border-teal-100"
+         style="background: linear-gradient(90deg, #ecfdf5 0%, #f0fdfa 100%); border-left: 6px solid #0d9488;">
       <div class="flex items-start gap-2.5">
         <div class="bg-teal-100 p-1.5 rounded-full mt-0.5 shrink-0">
           <svg class="w-4 h-4 text-teal-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
@@ -204,17 +175,16 @@
     <!-- 3-COLUMN LAYOUT -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
-      <!-- LEFT SIDEBAR -->
       <aside class="lg:col-span-3 space-y-4">
         <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
           <p class="font-semibold text-gray-800 text-sm">Welcome to SPABLE</p>
           <p class="text-gray-400 text-xs mt-1">Log in to build your profile</p>
-          <button class="login-trigger mt-3 w-full py-2 text-xs font-medium rounded-xl bg-teal-600 text-white hover:bg-teal-700" data-provider="any">
+          <button class="login-trigger mt-3 w-full py-2 text-xs font-medium rounded-xl bg-teal-600 text-white hover:bg-teal-700">
             Log in / Sign up
           </button>
         </div>
 
-        <nav aria-label="Quick links" class="bg-white rounded-2xl border border-gray-100 shadow-sm p-2">
+        <nav class="bg-white rounded-2xl border border-gray-100 shadow-sm p-2">
           <ul class="space-y-0.5">
             <li><a href="#feed" class="block px-3 py-2.5 rounded-xl text-sm text-gray-700 hover:bg-teal-50 hover:text-teal-700">Home feed</a></li>
             <li><a href="#market" class="block px-3 py-2.5 rounded-xl text-sm text-gray-700 hover:bg-teal-50 hover:text-teal-700">Marketplace</a></li>
@@ -224,25 +194,24 @@
         </nav>
       </aside>
 
-      <!-- CENTER -->
       <div class="lg:col-span-6 space-y-5">
         <section id="feed">
           <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-3.5 mb-4">
-            <button class="login-trigger w-full text-left text-gray-400 text-sm bg-gray-50 rounded-xl px-4 py-2.5 border border-gray-200" data-provider="any">
+            <button class="login-trigger w-full text-left text-gray-400 text-sm bg-gray-50 rounded-xl px-4 py-2.5 border border-gray-200">
               Share something with the community…
             </button>
           </div>
 
-          <div class="flex gap-2 overflow-x-auto scroll-x-clean pb-2 -mx-1 px-1 mb-3">
+          <div class="flex gap-2 overflow-x-auto pb-2 -mx-1 px-1 mb-3">
             <button class="feed-filter flex-shrink-0 px-3.5 py-1.5 text-xs font-medium rounded-full bg-teal-600 text-white" data-filter="for-you">For you</button>
             <button class="feed-filter flex-shrink-0 px-3.5 py-1.5 text-xs font-medium rounded-full bg-white text-gray-600 border border-gray-200" data-filter="ngos">NGOs</button>
             <button class="feed-filter flex-shrink-0 px-3.5 py-1.5 text-xs font-medium rounded-full bg-white text-gray-600 border border-gray-200" data-filter="jobs">Jobs</button>
           </div>
 
-          <div class="empty-state bg-white rounded-2xl border border-dashed border-gray-200 p-8 text-center">
+          <div class="bg-white rounded-2xl border border-dashed border-gray-200 p-8 text-center">
             <h3 class="text-sm font-semibold text-gray-700 mb-1">No posts yet</h3>
             <p class="text-xs text-gray-400 max-w-xs mx-auto">Be the first to share something with the community.</p>
-            <button class="login-trigger mt-4 px-4 py-2 text-xs font-medium rounded-xl bg-teal-600 text-white hover:bg-teal-700" data-provider="any">Log in to post</button>
+            <button class="login-trigger mt-4 px-4 py-2 text-xs font-medium rounded-xl bg-teal-600 text-white hover:bg-teal-700">Log in to post</button>
           </div>
         </section>
 
@@ -254,25 +223,20 @@
               <button class="agg-tab px-3.5 py-2 text-gray-400 text-[11px] font-medium" data-tab="ngos">NGOs</button>
               <button class="agg-tab px-3.5 py-2 text-gray-400 text-[11px] font-medium" data-tab="jobs">Jobs</button>
             </div>
-            <ul id="aggregatorList" class="divide-y divide-gray-100">
-              <li class="px-3.5 py-6 text-center">
-                <div class="shimmer h-4 w-3/4 mx-auto rounded mb-2"></div>
-                <div class="shimmer h-3 w-1/2 mx-auto rounded"></div>
-                <p class="text-[10px] text-gray-400 mt-3">Connecting to external sources…</p>
-              </li>
-            </ul>
+            <div class="px-3.5 py-6 text-center">
+              <p class="text-[10px] text-gray-400">Connecting to external sources…</p>
+            </div>
           </div>
         </section>
       </div>
 
-      <!-- RIGHT SIDEBAR -->
       <aside class="lg:col-span-3 space-y-4">
         <section id="market">
           <h2 class="text-sm font-bold text-gray-800 mb-2.5">Marketplace</h2>
           <div class="bg-white rounded-xl border border-dashed border-gray-200 p-5 text-center">
             <p class="text-[11px] text-gray-400">No items listed yet.</p>
           </div>
-          <button class="login-trigger mt-2.5 w-full text-center text-[11px] font-medium text-teal-600 bg-white py-2 rounded-xl border border-gray-200" data-provider="any">
+          <button class="login-trigger mt-2.5 w-full text-center text-[11px] font-medium text-teal-600 bg-white py-2 rounded-xl border border-gray-200">
             List an item (log in required)
           </button>
         </section>
@@ -320,135 +284,120 @@
     </div>
   </footer>
 
-  <!-- LOGIN MODAL -->
-  <div id="loginModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40 backdrop-blur-sm p-4" role="dialog" aria-modal="true">
-    <div class="bg-white rounded-2xl shadow-xl max-w-sm w-full p-6 relative">
-      <button id="closeLoginModal" class="absolute top-3 right-3 p-1.5 rounded-lg hover:bg-gray-100" aria-label="Close">
-        <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+  <!-- ============ LOGIN MODAL (bulletproof) ============ -->
+  <div id="loginModal" role="dialog" aria-modal="true" aria-labelledby="loginModalTitle">
+    <div class="modal-box">
+      <button id="closeLoginModal" style="position:absolute;top:12px;right:12px;padding:6px;border-radius:8px;background:transparent;border:none;cursor:pointer;" aria-label="Close login dialog">
+        <svg width="16" height="16" fill="none" stroke="#6b7280" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
       </button>
-      <h2 class="text-lg font-bold text-gray-800 mb-1">Log in to SPABLE</h2>
-      <p class="text-xs text-gray-500 mb-5">Choose a provider to continue.</p>
-      <div class="space-y-2.5">
-        <button class="login-provider w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-white border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50" data-provider="google">
+      <h2 id="loginModalTitle" style="font-size:18px;font-weight:700;color:#1f2937;margin:0 0 4px 0;">Log in to SPABLE</h2>
+      <p style="font-size:12px;color:#6b7280;margin:0 0 20px 0;">Choose a provider to continue.</p>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <button class="login-provider" data-provider="google"
+                style="width:100%;padding:10px;border-radius:12px;background:#fff;border:1px solid #d1d5db;font-size:14px;font-weight:500;color:#374151;cursor:pointer;">
           Continue with Google
         </button>
-        <button class="login-provider w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-teal-600 text-white text-sm font-medium hover:bg-teal-700" data-provider="email">
+        <button class="login-provider" data-provider="email"
+                style="width:100%;padding:10px;border-radius:12px;background:#0d9488;border:1px solid #0d9488;font-size:14px;font-weight:500;color:#fff;cursor:pointer;">
           Continue with Email
         </button>
       </div>
-      <p class="text-[10px] text-gray-400 text-center mt-4">By logging in you agree to our guidelines.</p>
+      <p style="font-size:10px;color:#9ca3af;text-align:center;margin:16px 0 0 0;">By logging in you agree to our guidelines.</p>
     </div>
   </div>
 
+  <!-- ============ JAVASCRIPT ============ -->
   <script>
     (function() {
       'use strict';
 
-      function announce(message) {
-        const live = document.createElement('div');
-        live.setAttribute('aria-live', 'polite');
-        live.className = 'sr-only';
-        live.textContent = message;
-        document.body.appendChild(live);
-        setTimeout(() => live.remove(), 1500);
-      }
-
       const yearEl = document.getElementById('year');
       if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-      // Login modal
-      const loginModal = document.getElementById('loginModal');
-      const closeLoginModal = document.getElementById('closeLoginModal');
+      // ===== LOGIN MODAL =====
+      const modal = document.getElementById('loginModal');
+      const closeBtn = document.getElementById('closeLoginModal');
 
-      function openLoginModal() {
-        if (!loginModal) return;
-        loginModal.classList.remove('hidden');
-        loginModal.classList.add('flex');
-        loginModal.style.display = 'flex';
-        loginModal.style.zIndex = '9999';
+      function openModal() {
+        if (!modal) return;
+        modal.classList.add('is-open');
         document.body.style.overflow = 'hidden';
         console.log('[SPABLE] Modal opened');
       }
 
       function closeModal() {
-        if (!loginModal) return;
-        loginModal.classList.add('hidden');
-        loginModal.classList.remove('flex');
-        loginModal.style.display = '';
+        if (!modal) return;
+        modal.classList.remove('is-open');
         document.body.style.overflow = '';
       }
 
-      // Event delegation — catches ALL .login-trigger clicks
-      document.body.addEventListener('click', function(e) {
+      // Attach to ALL login triggers (both buttons and links)
+      document.addEventListener('click', function(e) {
         const trigger = e.target.closest('.login-trigger');
         if (trigger) {
           e.preventDefault();
           e.stopPropagation();
-          openLoginModal();
+          openModal();
         }
       });
 
-      if (closeLoginModal) closeLoginModal.addEventListener('click', closeModal);
-
-      if (loginModal) {
-        loginModal.addEventListener('click', function(e) {
-          if (e.target === loginModal) closeModal();
+      if (closeBtn) {
+        closeBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          closeModal();
         });
       }
 
+      // Click on the dark backdrop closes it
+      if (modal) {
+        modal.addEventListener('click', function(e) {
+          if (e.target === modal) closeModal();
+        });
+      }
+
+      // Esc key closes it
       document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && loginModal && !loginModal.classList.contains('hidden')) closeModal();
+        if (e.key === 'Escape' && modal && modal.classList.contains('is-open')) {
+          closeModal();
+        }
       });
 
-      // Provider buttons
-      document.querySelectorAll('.login-provider').forEach(btn => {
-        btn.addEventListener('click', () => {
-          console.log(`[SPABLE] Provider: ${btn.dataset.provider}`);
-          announce(`Continue with ${btn.dataset.provider}`);
+      // Provider buttons inside modal
+      document.querySelectorAll('.login-provider').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          console.log('[SPABLE] Provider: ' + btn.dataset.provider);
         });
       });
 
-      // Language
+      // ===== LANGUAGE =====
       const langSelect = document.getElementById('languageSelect');
       if (langSelect) {
         langSelect.addEventListener('change', function(e) {
-          console.log(`[SPABLE] Language: ${e.target.value}`);
+          console.log('[SPABLE] Language: ' + e.target.value);
         });
       }
 
-      // Filters
-      document.querySelectorAll('.feed-filter').forEach(chip => {
-        chip.addEventListener('click', () => {
-          document.querySelectorAll('.feed-filter').forEach(c => {
+      // ===== FEED FILTERS =====
+      document.querySelectorAll('.feed-filter').forEach(function(chip) {
+        chip.addEventListener('click', function() {
+          document.querySelectorAll('.feed-filter').forEach(function(c) {
             c.classList.remove('bg-teal-600', 'text-white');
             c.classList.add('bg-white', 'text-gray-600', 'border', 'border-gray-200');
           });
           chip.classList.add('bg-teal-600', 'text-white');
           chip.classList.remove('bg-white', 'text-gray-600', 'border', 'border-gray-200');
-          console.log(`[SPABLE] Filter: ${chip.dataset.filter}`);
+          console.log('[SPABLE] Filter: ' + chip.dataset.filter);
         });
       });
 
-      // Aggregator tabs
-      document.querySelectorAll('.agg-tab').forEach(tab => {
-        tab.addEventListener('click', () => console.log(`[SPABLE] Tab: ${tab.dataset.tab}`));
+      // ===== AGGREGATOR TABS =====
+      document.querySelectorAll('.agg-tab').forEach(function(tab) {
+        tab.addEventListener('click', function() {
+          console.log('[SPABLE] Tab: ' + tab.dataset.tab);
+        });
       });
 
-      // Search
-      const globalSearch = document.getElementById('globalSearch');
-      if (globalSearch) {
-        globalSearch.addEventListener('keydown', function(e) {
-          if (e.key === 'Enter') console.log(`[SPABLE] Search: ${globalSearch.value}`);
-        });
-      }
-
-      // Notifications
-      const notifBtn = document.getElementById('notifBtn');
-      if (notifBtn) {
-        notifBtn.addEventListener('click', () => console.log('[SPABLE] Notif clicked'));
-      }
-
-      console.log('%c[SPABLE] v2 ready — "Our Effort" + robust login.', 'color: #0d9488; font-weight: bold;');
+      console.log('%c[SPABLE] v3 ready — modal fixed + "specially able" wording', 'color: #0d9488; font-weight: bold;');
     })();
   </script>
 </body>
